@@ -1,24 +1,11 @@
-# Hi 👋 I'm Krishank Raghuvanshi
+#I'm Krishank Raghuvanshi
 
 💻 Software Developer | 🏆 Competitive Programmer
 
----
-
 ## 🌐 Coding Platforms
 
+[![LeetCode](https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black)](https://leetcode.com/kri5H4nkr49Hu1c)
 
-<p align="left">
+[![CodeChef](https://img.shields.io/badge/CodeChef-5B4638?style=for-the-badge&logo=codechef&logoColor=white)](https://www.codechef.com/users/krishhhank)
 
-<a href="https://leetcode.com/kri5H4nkr49Hu1c">
-<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/leetcode.svg" height="50"/>
-</a>
-
-<a href="https://www.codechef.com/users/krishhhank">
-<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/codechef.svg" height="50"/>
-</a>
-
-<a href="https://atcoder.jp/users/krishank">
-<img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/atcoder.svg" height="50"/>
-</a>
-
-</p>
+[![AtCoder](https://img.shields.io/badge/AtCoder-005BAC?style=for-the-badge&logo=atcoder&logoColor=white)](https://atcoder.jp/users/krishank)
