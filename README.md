@@ -6,7 +6,7 @@
 
 ![](./profile-3d-contrib/profile-night-green.svg)
 
-## Statistics :chart_with_upwards_trend:
+## Leetcode Statistics :chart_with_upwards_trend:
 
 ![](https://leetcard.jacoblin.cool/kri5H4nkr49Hu1c?ext=contest)
 
