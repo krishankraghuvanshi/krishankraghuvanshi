@@ -19,268 +19,78 @@
 ![](https://krishankraghuvanshi.vercel.app/)
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Walking Human Simulation</title>
-<style>
-  :root{
-    --bg1:#0f1b2d;
-    --bg2:#1c3050;
-    --figure:#e8eef7;
-    --joint:#7fd1ff;
-    --accent:#ff8a5b;
-  }
-  html,body{
-    margin:0; height:100%;
-    background: linear-gradient(180deg, var(--bg1), var(--bg2));
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color:#dfe8f5;
-    overflow:hidden;
-  }
-  #ui{
-    position:fixed; top:16px; left:16px; z-index:10;
-    background:rgba(10,16,28,0.55);
-    backdrop-filter: blur(6px);
-    padding:14px 16px; border-radius:12px;
-    border:1px solid rgba(255,255,255,0.08);
-    max-width: 260px;
-  }
-  #ui h1{ font-size:15px; margin:0 0 8px; letter-spacing:0.3px; }
-  #ui label{ display:block; font-size:12px; margin-top:10px; opacity:0.85; }
-  #ui input[type=range]{ width:100%; }
-  #ui .row{ display:flex; gap:8px; margin-top:10px; }
-  #ui button{
-    flex:1; background:var(--accent); border:none; color:#20120a;
-    font-weight:600; padding:7px 0; border-radius:8px; cursor:pointer;
-    font-size:12px;
-  }
-  #ui button.secondary{ background:transparent; color:#dfe8f5; border:1px solid rgba(255,255,255,0.25); }
-  #stage{ width:100vw; height:100vh; display:block; }
-  #footer{
-    position:fixed; bottom:10px; right:14px; font-size:11px; opacity:0.4;
-  }
-</style>
-</head>
-<body>
+<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" width="200" height="260" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToyN2ZmOGFkYS05YjYzLTRjZTAtOTRjYi02MWYxNWVhNjI4ZGUAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaA3lN5CjezcV0vs52u8kSf4AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpjMjRiMzgwZi04N2VjLTQ2MGQtYTRlZC00ZmY3OTVmMDI1OTVscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoIqZ7sl6qhdEhrwZ7lf+jxgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgguT3vcWGyesp/tF4KTpodjpTKoqIoDlKHLafu3Mm+HhakZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaBbls2q0ZSNhpLtR/dF552IAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCCD24Y+LO2l7O4ImFn9El3yv/zdzoFZ5n5QuxO0tXvJjWRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiWZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjI3ZmY4YWRhLTliNjMtNGNlMC05NGNiLTYxZjE1ZWE2MjhkZS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmU4M2FlMmE4LTIxNDYtNDA4NS1hMDk0LTdlYjBkMWMwNzY4MnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCC5Pe9xYbJ6yn+0XgpOmh2OlMqioigOUoctp+7cyb4eFqJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggk3U7i2QYh+rTl1Q+1Fpz591Ga9uhQRROjaO/wUTyLUCiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggTjKaGfjuLasybe00gLCtOiUzpvhfWc8if1f2cfH3dA10Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQNUInbaNXPS9p227Lv3A0FQtwmyo2euTWM05E9Phj2HqoYdYLV6HfpH7AaUvLYfZX2YEolCPEAcrzlZH4JjoEPg=</c2pa:manifest></metadata>
+  <defs>
+    <style>
+      .bone { stroke:#e8eef7; stroke-width:9; stroke-linecap:round; fill:none; }
+      .bone-arm { stroke:#cfe0f5; stroke-width:7; stroke-linecap:round; fill:none; }
+      .joint { fill:#7fd1ff; }
+      .foot { stroke:#ff8a5b; stroke-width:7; stroke-linecap:round; }
+    </style>
+  </defs>
 
-<div id="ui">
-  <h1>🚶 Walking Human Simulation</h1>
-  <label>Speed (steps/sec): <span id="speedVal">1.0</span></label>
-  <input id="speed" type="range" min="0.2" max="3" step="0.1" value="1.0">
+  <rect x="0" y="0" width="200" height="260" fill="#152238"/>
+  <rect x="0" y="205" width="200" height="55" fill="#22314a"/>
+  <line x1="0" y1="205" x2="200" y2="205" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
 
-  <label>Stride length: <span id="strideVal">1.0</span></label>
-  <input id="stride" type="range" min="0.5" max="1.6" step="0.05" value="1.0">
+  <!-- head -->
+  <circle cx="100" cy="55" r="14" fill="#f2f6fc"/>
+  <!-- torso -->
+  <line class="bone" x1="100" y1="68" x2="100" y2="128" stroke-width="14"/>
 
-  <label>Height (px): <span id="heightVal">220</span></label>
-  <input id="height" type="range" min="120" max="320" step="5" value="220">
+  <!-- LEFT LEG (hip pivot) -->
+  <g transform="translate(92,128)">
+    <animateTransform attributeName="transform" type="rotate"
+      values="0 -35;0 0;0 35;0 0;0 -35" keyTimes="0;0.25;0.5;0.75;1"
+      dur="1s" repeatCount="indefinite" additive="sum" />
+    <line class="bone" x1="0" y1="0" x2="0" y2="46"/>
+    <circle class="joint" cx="0" cy="0" r="6"/>
+    <g transform="translate(0,46)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="0;35;0;0;0" keyTimes="0;0.25;0.5;0.75;1"
+        dur="1s" repeatCount="indefinite" additive="sum" />
+      <line class="bone" x1="0" y1="0" x2="0" y2="44"/>
+      <circle class="joint" cx="0" cy="0" r="5"/>
+      <line class="foot" x1="0" y1="44" x2="12" y2="47"/>
+    </g>
+  </g>
 
-  <div class="row">
-    <button id="pauseBtn">Pause</button>
-    <button id="resetBtn" class="secondary">Reset</button>
-  </div>
-</div>
+  <!-- RIGHT LEG (hip pivot, opposite phase) -->
+  <g transform="translate(108,128)">
+    <animateTransform attributeName="transform" type="rotate"
+      values="0 35;0 0;0 -35;0 0;0 35" keyTimes="0;0.25;0.5;0.75;1"
+      dur="1s" repeatCount="indefinite" additive="sum" />
+    <line class="bone" x1="0" y1="0" x2="0" y2="46"/>
+    <circle class="joint" cx="0" cy="0" r="6"/>
+    <g transform="translate(0,46)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="0;0;0;35;0" keyTimes="0;0.25;0.5;0.75;1"
+        dur="1s" repeatCount="indefinite" additive="sum" />
+      <line class="bone" x1="0" y1="0" x2="0" y2="44"/>
+      <circle class="joint" cx="0" cy="0" r="5"/>
+      <line class="foot" x1="0" y1="44" x2="12" y2="47"/>
+    </g>
+  </g>
 
-<canvas id="stage"></canvas>
-<div id="footer">procedural walk-cycle · foot swing + lift, character moves across screen</div>
+  <!-- LEFT ARM (opposite phase to left leg = matches right leg) -->
+  <g transform="translate(88,74)">
+    <animateTransform attributeName="transform" type="rotate"
+      values="0 35;0 0;0 -35;0 0;0 35" keyTimes="0;0.25;0.5;0.75;1"
+      dur="1s" repeatCount="indefinite" additive="sum" />
+    <line class="bone-arm" x1="0" y1="0" x2="0" y2="36"/>
+    <circle class="joint" cx="0" cy="0" r="4.5"/>
+    <line class="bone-arm" x1="0" y1="36" x2="0" y2="68"/>
+    <circle class="joint" cx="0" cy="36" r="4"/>
+  </g>
 
-<script>
-const canvas = document.getElementById('stage');
-const ctx = canvas.getContext('2d');
-function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-resize();
-window.addEventListener('resize', resize);
-
-// ---- controls ----
-const speedInput  = document.getElementById('speed');
-const strideInput = document.getElementById('stride');
-const heightInput = document.getElementById('height');
-const speedVal  = document.getElementById('speedVal');
-const strideVal = document.getElementById('strideVal');
-const heightVal = document.getElementById('heightVal');
-let paused = false;
-
-speedInput.oninput  = () => speedVal.textContent  = (+speedInput.value).toFixed(1);
-strideInput.oninput = () => strideVal.textContent = (+strideInput.value).toFixed(2);
-heightInput.oninput = () => heightVal.textContent = heightInput.value;
-
-document.getElementById('pauseBtn').onclick = (e) => {
-  paused = !paused;
-  e.target.textContent = paused ? 'Resume' : 'Pause';
-};
-document.getElementById('resetBtn').onclick = () => {
-  speedInput.value = 1.0; strideInput.value = 1.0; heightInput.value = 220;
-  speedInput.oninput(); strideInput.oninput(); heightInput.oninput();
-  charX = -100;
-  t = 0;
-};
-
-// ---- state ----
-let t = 0;          // gait phase accumulator (radians)
-let charX = -100;   // character's horizontal position, walks left -> right across screen
-
-function joint(x,y,r,color){
-  ctx.save();
-  ctx.fillStyle = color || '#7fd1ff';
-  ctx.beginPath();
-  ctx.arc(x,y,r,0,Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-}
-
-function segment(x1,y1,x2,y2,width,color){
-  ctx.save();
-  ctx.strokeStyle = color;
-  ctx.lineWidth = width;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(x1,y1);
-  ctx.lineTo(x2,y2);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function drawGround(groundY){
-  ctx.save();
-  ctx.fillStyle = '#22314a';
-  ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
-  ctx.strokeStyle = 'rgba(255,255,255,0.10)';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(0, groundY);
-  ctx.lineTo(canvas.width, groundY);
-  ctx.stroke();
-  // tick marks for a sense of scale (static ground, character moves over it)
-  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-  ctx.lineWidth = 1;
-  for(let x = 0; x < canvas.width; x += 50){
-    ctx.beginPath();
-    ctx.moveTo(x, groundY);
-    ctx.lineTo(x, groundY + 10);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-// One leg's foot trajectory over a full 2*PI gait cycle:
-//  - swing phase  (0 .. PI): foot lifts off ground, arcs forward. offset goes -stride -> +stride, lift is a hump (max mid-swing).
-//  - stance phase (PI .. 2PI): foot is planted, body moves forward over it, offset eases back from +stride -> -stride, lift = 0.
-function footOffset(phase, strideRange){
-  return -Math.cos(phase) * strideRange;
-}
-function footLift(phase, liftMax){
-  const s = Math.sin(phase);
-  return s > 0 ? s * liftMax : 0; // only lifts during the 0..PI half (swing)
-}
-
-function drawLeg(hipX, hipY, phase, scale, strideAmt){
-  const thighLen = 46 * scale;
-  const shinLen  = 44 * scale;
-  const legLen = thighLen + shinLen;
-  const strideRange = 34 * scale * strideAmt;
-  const liftMax = 22 * scale;
-
-  const offset = footOffset(phase, strideRange);
-  const lift   = footLift(phase, liftMax);
-
-  const footX = hipX + offset;
-  const footY = hipY + legLen - lift;
-
-  // knee: roughly midway horizontally, bends upward (less far down) proportional to lift,
-  // and forward proportional to half the offset -- gives a natural bent-knee arc during swing.
-  const kneeX = hipX + offset * 0.5;
-  const kneeY = hipY + thighLen - lift * 0.55;
-
-  segment(hipX, hipY, kneeX, kneeY, 10*scale, '#e8eef7');
-  segment(kneeX, kneeY, footX, footY, 8*scale, '#e8eef7');
-  joint(hipX, hipY, 5.5*scale, '#7fd1ff');
-  joint(kneeX, kneeY, 5*scale, '#7fd1ff');
-
-  // foot
-  segment(footX, footY, footX + Math.sign(offset||1)*10*scale, footY + 2*scale, 7*scale, '#ff8a5b');
-
-  return { footY, kneeY };
-}
-
-function drawArm(shX, shY, phase, scale, strideAmt){
-  const upperLen = 36 * scale;
-  const foreLen  = 34 * scale;
-  const swingRange = 26 * scale * strideAmt;
-  const swing = Math.sin(phase) * swingRange;
-
-  const elbowX = shX + swing * 0.6;
-  const elbowY = shY + upperLen;
-  const handX  = shX + swing;
-  const handY  = shY + upperLen + foreLen;
-
-  segment(shX, shY, elbowX, elbowY, 8*scale, '#cfe0f5');
-  segment(elbowX, elbowY, handX, handY, 6.5*scale, '#cfe0f5');
-  joint(shX, shY, 4.5*scale, '#7fd1ff');
-  joint(elbowX, elbowY, 4*scale, '#7fd1ff');
-}
-
-function drawHuman(cx, hipY, scale, phase, strideAmt){
-  const torsoLen = 70 * scale;
-  const headR = 15 * scale;
-
-  const rightPhase = phase;
-  const leftPhase  = phase + Math.PI;
-
-  // slight body bob: two small bounces per full stride cycle (down when weight-bearing)
-  const bob = Math.abs(Math.sin(phase)) * 5 * scale;
-  const hipYb = hipY - bob;
-  const shoulderY = hipYb - torsoLen;
-
-  // simple depth ordering: whichever leg is currently planted/back draws first
-  const backSide = Math.sin(phase) > 0 ? 'L' : 'R';
-
-  const legs = [
-    { side:'L', hipX: cx - 8*scale, shX: cx - 15*scale, phase: leftPhase },
-    { side:'R', hipX: cx + 8*scale, shX: cx + 15*scale, phase: rightPhase },
-  ];
-  const ordered = backSide === 'L' ? legs : [legs[1], legs[0]];
-
-  drawLeg(ordered[0].hipX, hipYb, ordered[0].phase, scale, strideAmt);
-  drawArm(ordered[0].shX, shoulderY, ordered[0].phase + Math.PI, scale, strideAmt);
-
-  // torso + head
-  segment(cx, hipYb, cx, shoulderY, 15*scale, '#f2f6fc');
-  ctx.save();
-  ctx.fillStyle = '#f2f6fc';
-  ctx.beginPath();
-  ctx.arc(cx, shoulderY - headR - 3*scale, headR, 0, Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-
-  drawLeg(ordered[1].hipX, hipYb, ordered[1].phase, scale, strideAmt);
-  drawArm(ordered[1].shX, shoulderY, ordered[1].phase + Math.PI, scale, strideAmt);
-}
-
-function frame(){
-  const speed = +speedInput.value;
-  const strideAmt = +strideInput.value;
-  const scale = (+heightInput.value) / 220;
-
-  if(!paused){
-    t += 0.06 * speed;                      // gait phase speed
-    charX += 1.7 * speed * strideAmt * scale; // walking speed across screen
-    if(charX > canvas.width + 60) charX = -60;
-  }
-
-  ctx.clearRect(0,0,canvas.width, canvas.height);
-  const groundY = canvas.height * 0.72;
-  drawGround(groundY);
-
-  const hipY = groundY - 92*scale;
-  drawHuman(charX, hipY, scale, t, strideAmt);
-
-  requestAnimationFrame(frame);
-}
-frame();
-</script>
-</body>
-</html>
-
-
-
+  <!-- RIGHT ARM (opposite phase to right leg = matches left leg) -->
+  <g transform="translate(112,74)">
+    <animateTransform attributeName="transform" type="rotate"
+      values="0 -35;0 0;0 35;0 0;0 -35" keyTimes="0;0.25;0.5;0.75;1"
+      dur="1s" repeatCount="indefinite" additive="sum" />
+    <line class="bone-arm" x1="0" y1="0" x2="0" y2="36"/>
+    <circle class="joint" cx="0" cy="0" r="4.5"/>
+    <line class="bone-arm" x1="0" y1="36" x2="0" y2="68"/>
+    <circle class="joint" cx="0" cy="36" r="4"/>
+  </g>
+</svg>
