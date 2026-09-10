@@ -19,3 +19,7 @@
 ![](https://krishankraghuvanshi.vercel.app/)
 
 
+[![popCode](https://cdn3.emoji.gg/emojis/1725_popCode.gif)](https://emoji.gg/emoji/1725_popCode)
+
+
+
