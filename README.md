@@ -8,7 +8,7 @@
 
 ## Leetcode Statistics :chart_with_upwards_trend:
 
-![Leetcode Stats](https://leetcard.jacoblin.cool/kri5H4nkr49Hu1c?theme=light)
+[![popCode](https://cdn3.emoji.gg/emojis/1725_popCode.gif)](https://emoji.gg/emoji/1725_popCode) ![Leetcode Stats](https://leetcard.jacoblin.cool/kri5H4nkr49Hu1c?theme=light)
 
 ## Contact Me 📲
 
@@ -19,7 +19,7 @@
 ![](https://krishankraghuvanshi.vercel.app/)
 
 
-[![popCode](https://cdn3.emoji.gg/emojis/1725_popCode.gif)](https://emoji.gg/emoji/1725_popCode)
+
 
 
 
