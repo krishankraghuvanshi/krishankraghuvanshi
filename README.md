@@ -16,7 +16,7 @@
     <a href="https://www.linkedin.com/in/krishankraghuvanshi/" target="_blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="30" width="40"/></a>
 </p>
 
-[![popCode](https://cdn3.emoji.gg/emojis/1725_popCode.gif)](https://emoji.gg/emoji/1725_popCode) ![](https://krishankraghuvanshi.vercel.app/)
+![](https://krishankraghuvanshi.vercel.app/)
 
 
 
